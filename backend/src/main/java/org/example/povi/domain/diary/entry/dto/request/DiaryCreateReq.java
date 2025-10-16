@@ -1,4 +1,4 @@
-package org.example.povi.domain.diary.dto.request;
+package org.example.povi.domain.diary.entry.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

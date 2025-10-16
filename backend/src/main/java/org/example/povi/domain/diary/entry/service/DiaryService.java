@@ -1,6 +1,7 @@
 package org.example.povi.domain.diary.entry.service;
 
 import lombok.RequiredArgsConstructor;
+
 import org.example.povi.domain.diary.entry.dto.request.DiaryCreateReq;
 import org.example.povi.domain.diary.entry.dto.request.DiaryUpdateReq;
 import org.example.povi.domain.diary.entry.dto.response.*;
@@ -9,6 +10,7 @@ import org.example.povi.domain.diary.entry.entity.DiaryImage;
 import org.example.povi.domain.diary.entry.repository.DiaryRepository;
 import org.example.povi.domain.diary.type.MoodEmoji;
 import org.example.povi.domain.diary.type.Visibility;
+
 import org.example.povi.domain.user.entity.User;
 import org.example.povi.domain.user.repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -28,10 +30,7 @@ public class DiaryService {
 
     private final DiaryRepository diaryRepository;
     private final UserRepository userRepository;
-//    private final FollowRepository followRepository;
 
-
-    //다이어리 생성
     @Transactional
     public DiaryCreateRes create(DiaryCreateReq req) {
         User user = userRepository.findById(req.getUserId())
@@ -48,7 +47,7 @@ public class DiaryService {
                 .visibility(req.getVisibility())
                 .build();
 
-        //이미지 유효성 검사
+        // 이미지 유효성 검사
         List<String> urls = req.getImageUrls();
         if (urls != null && !urls.isEmpty()) {
             if (urls.size() > 3) {
@@ -57,10 +56,9 @@ public class DiaryService {
             urls.stream()
                     .filter(u -> u != null && !u.isBlank())
                     .forEach(url -> diaryEntry.addImage(new DiaryImage(diaryEntry, url.trim())));
+
+            diaryRepository.save(diaryEntry);
+            return DiaryCreateRes.from(diaryEntry);
         }
-
-        diaryRepository.save(diaryEntry);
-        return DiaryCreateRes.from(diaryEntry);
     }
-
 }

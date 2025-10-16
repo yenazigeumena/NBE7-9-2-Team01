@@ -1,10 +1,10 @@
-package org.example.povi.domain.diary.entity;
+package org.example.povi.domain.diary.entry.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.example.povi.domain.diary.dto.request.DiaryUpdateReq;
+import org.example.povi.domain.diary.entry.dto.request.DiaryUpdateReq;
 import org.example.povi.domain.diary.type.MoodEmoji;
 import org.example.povi.domain.diary.type.Visibility;
 import org.example.povi.domain.user.entity.User;
@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "diary_entries")
 @AttributeOverride(name = "id", column = @Column(name = "diary_id"))
-public class Diary extends BaseEntity {
+public class DiaryEntry extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
@@ -38,12 +38,12 @@ public class Diary extends BaseEntity {
     @Column(name = "visibility", nullable = false)
     private Visibility visibility = Visibility.PRIVATE;
 
-    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "diaryEntry", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DiaryImage> images = new ArrayList<>();
 
     @Builder
-    public DiaryEntry(User user, String title, String content,
-                      MoodEmoji moodEmoji, Visibility visibility) {
+    public DiaryEntry(User user, String title, String content, MoodEmoji moodEmoji, Visibility visibility) {
+
         this.user = user;
         this.title = title;
         this.content = content;
@@ -53,7 +53,7 @@ public class Diary extends BaseEntity {
 
     public void addImage(DiaryImage image) {
         images.add(image);
-        image.setDiary(this);
+        image.setDiaryEntry(this);
     }
 
 }

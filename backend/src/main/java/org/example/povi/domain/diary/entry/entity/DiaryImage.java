@@ -1,4 +1,4 @@
-package org.example.povi.domain.diary.entity;
+package org.example.povi.domain.diary.entry.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,17 +13,17 @@ public class DiaryImage extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "diary_id", nullable = false)
-    private Diary diary;
+    private DiaryEntry diaryEntry;
 
     @Column(name = "image_url", length = 2048, nullable = false)
     private String imageUrl;
 
-    public DiaryImage(Diary diary, String imageUrl) {
-        this.diary = diary;
+    public DiaryImage(DiaryEntry diaryEntry, String imageUrl) {
+        this.diaryEntry = diaryEntry;
         this.imageUrl = imageUrl;
     }
 
-    void setDiary(Diary diary) {
-        this.diary = diary;
+    void setDiaryEntry(DiaryEntry diaryEntry) {
+        this.diaryEntry = diaryEntry;
     }
 }

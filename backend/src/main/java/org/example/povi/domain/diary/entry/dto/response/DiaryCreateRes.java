@@ -1,9 +1,9 @@
-package org.example.povi.domain.diary.dto.response;
+package org.example.povi.domain.diary.entry.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.example.povi.domain.diary.entity.Diary;
-import org.example.povi.domain.diary.entity.DiaryImage;
+import org.example.povi.domain.diary.entry.entity.DiaryEntry;
+import org.example.povi.domain.diary.entry.entity.DiaryImage;
 import org.example.povi.domain.diary.type.MoodEmoji;
 import org.example.povi.domain.diary.type.Visibility;
 
@@ -21,17 +21,17 @@ public class DiaryCreateRes {
     private final List<String> imageUrls;
     private final LocalDateTime createdAt;
 
-    public static DiaryCreateRes from(Diary diary) {
+    public static DiaryCreateRes from(DiaryEntry diaryEntry) {
         return DiaryCreateRes.builder()
-                .diaryId(diary.getId())
-                .title(diary.getTitle())
-                .content(diary.getContent())
-                .moodEmoji(diary.getMoodEmoji())
-                .visibility(diary.getVisibility())
-                .imageUrls(diary.getImages().stream()
+                .diaryId(diaryEntry.getId())
+                .title(diaryEntry.getTitle())
+                .content(diaryEntry.getContent())
+                .moodEmoji(diaryEntry.getMoodEmoji())
+                .visibility(diaryEntry.getVisibility())
+                .imageUrls(diaryEntry.getImages().stream()
                         .map(DiaryImage::getImageUrl)
                         .toList())
-                .createdAt(diary.getCreatedAt())
+                .createdAt(diaryEntry.getCreatedAt())
                 .build();
     }
 }
