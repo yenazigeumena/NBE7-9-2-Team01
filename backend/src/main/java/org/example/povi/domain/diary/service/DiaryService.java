@@ -40,7 +40,7 @@ public class DiaryService {
             req.getImageUrls().forEach(url -> diary.addImage(new DiaryImage(diary, url)));
         }
 
-        return new DiaryCreateRes(diaryRepository.save(diary));
+        return DiaryCreateRes.from(diaryRepository.save(diary));
     }
 
 
