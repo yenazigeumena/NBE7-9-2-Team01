@@ -15,7 +15,7 @@ public class DiaryImage extends BaseEntity {
     @JoinColumn(name = "diary_id", nullable = false)
     private Diary diary;
 
-    @Column(name = "image_url", columnDefinition = "TEXT")
+    @Column(name = "image_url", length = 2048, nullable = false)
     private String imageUrl;
 
     public DiaryImage(Diary diary, String imageUrl) {
