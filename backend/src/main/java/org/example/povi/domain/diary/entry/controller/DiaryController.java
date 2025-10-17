@@ -1,0 +1,29 @@
+package org.example.povi.domain.diary.entry.controller;
+
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.example.povi.domain.diary.entry.dto.request.DiaryCreateReq;
+import org.example.povi.domain.diary.entry.dto.response.DiaryCreateRes;
+import org.example.povi.domain.diary.entry.service.DiaryService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/diaries")
+public class DiaryController {
+
+    private final DiaryService diaryService;
+
+    @PostMapping
+    @Operation(summary = "다이어리 생성")
+    public ResponseEntity<DiaryCreateRes> createDiary(@RequestBody @Valid DiaryCreateReq req) {
+        DiaryCreateRes response = diaryService.create(req);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+}
