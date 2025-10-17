@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Builder
 public class DiaryCreateRes {
-    private final Long id;
+    private final Long diaryId;
     private final String title;
     private final String content;
     private final MoodEmoji moodEmoji;

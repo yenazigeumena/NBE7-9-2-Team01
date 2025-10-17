@@ -3,14 +3,15 @@ package org.example.povi.domain.diary.entry.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
 import org.example.povi.domain.diary.entry.dto.request.DiaryCreateReq;
-import org.example.povi.domain.diary.entry.dto.request.DiaryUpdateReq;
-import org.example.povi.domain.diary.entry.dto.response.*;
+import org.example.povi.domain.diary.entry.dto.response.DiaryCreateRes;
 import org.example.povi.domain.diary.entry.service.DiaryService;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor

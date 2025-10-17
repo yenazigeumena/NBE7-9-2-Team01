@@ -1,16 +1,11 @@
 package org.example.povi.domain.diary.entry.service;
 
 import lombok.RequiredArgsConstructor;
-
 import org.example.povi.domain.diary.entry.dto.request.DiaryCreateReq;
-import org.example.povi.domain.diary.entry.dto.request.DiaryUpdateReq;
-import org.example.povi.domain.diary.entry.dto.response.*;
+import org.example.povi.domain.diary.entry.dto.response.DiaryCreateRes;
 import org.example.povi.domain.diary.entry.entity.DiaryEntry;
 import org.example.povi.domain.diary.entry.entity.DiaryImage;
 import org.example.povi.domain.diary.entry.repository.DiaryRepository;
-import org.example.povi.domain.diary.type.MoodEmoji;
-import org.example.povi.domain.diary.type.Visibility;
-
 import org.example.povi.domain.user.entity.User;
 import org.example.povi.domain.user.repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -18,11 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -56,9 +47,9 @@ public class DiaryService {
             urls.stream()
                     .filter(u -> u != null && !u.isBlank())
                     .forEach(url -> diaryEntry.addImage(new DiaryImage(diaryEntry, url.trim())));
-
-            diaryRepository.save(diaryEntry);
-            return DiaryCreateRes.from(diaryEntry);
         }
+
+        diaryRepository.save(diaryEntry);
+        return DiaryCreateRes.from(diaryEntry);
     }
 }
