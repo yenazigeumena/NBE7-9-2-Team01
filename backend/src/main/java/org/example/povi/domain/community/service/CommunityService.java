@@ -5,14 +5,18 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.example.povi.domain.community.dto.PostCreateRequest;
 import org.example.povi.domain.community.dto.PostCreateResponse;
+import org.example.povi.domain.community.dto.PostDeleteResponse;
 import org.example.povi.domain.community.entity.CommunityImage;
 import org.example.povi.domain.community.entity.CommunityPost;
 import org.example.povi.domain.community.repository.CommunityImageRepository;
 import org.example.povi.domain.community.repository.CommunityRepository;
+import org.example.povi.domain.diary.entry.entity.DiaryImage;
 import org.example.povi.domain.user.entity.User;
 import org.example.povi.domain.user.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +47,19 @@ public class CommunityService {
 
         return new PostCreateResponse(savedPost.getId(), "게시글이 성공적으로 생성되었습니다.");
 
+    }
+
+    @Transactional
+    public PostDeleteResponse deletePost(Long userId, Long postId) {
+        CommunityPost post = communityRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
+
+        if (!post.getUser().getId().equals(userId)) {
+            throw new SecurityException("삭제 권한이 없는 사용자입니다.");
+        }
+        communityRepository.delete(post);
+
+        return new PostDeleteResponse(postId, "게시글이 성공적으로 삭제되었습니다.");
     }
 
 
